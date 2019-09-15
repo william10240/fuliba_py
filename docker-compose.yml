@@ -1,0 +1,15 @@
+
+version: '2'
+    
+services:
+  fuli:
+    build: ./
+    image: fuliimg
+    volumes:
+      - ./:/app
+      - /data/dcdb/fuliimages:/fuliimages  # 自定义保存路径请修改这行冒号前面的路径,推荐使用绝对路径
+    command: 'python3 /app/app.py'
+    restart: always
+
+
+

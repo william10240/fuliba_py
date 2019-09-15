@@ -1,0 +1,19 @@
+# 福利吧(http://www.fulibus.net) 福利汇总图片下载器
+
+## 说明
+- 保存2019年来福利汇总第二页的图片
+- 每小时自动下载一遍,省事省心省力
+- 如果网络不好,等网络好的时候会自动下载
+
+
+## 自定义 图片存放路径
+
+## 1.如果使用Docker-compose部署
+修改 docker-compose.yml
+将 "/data/dcdb/fuliimages:/app/images" 修改为 yourimagepath:/app/images
+
+## 2. 如果直接使用python运行的
+图片会保存在与本项目同级的fuliimages中
+如需修改请修改 app.py 中
+"IMG_PATH = os.path.join(os.path.dirname(APP_PATH), "fuliimages")
+
