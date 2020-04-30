@@ -111,7 +111,10 @@ def save_img(img_src, img_path):
 
     if os.path.splitext(img_src)[1] == '':
         ext = imghdr.what(None, res)
-        if ext == 'jpeg':
+        if ext == None:
+            logger.error('--------图片数据解析请求失败:' + img_src + "\t" + img_path)
+            return
+        elif ext == 'jpeg':
             img_path = img_path + '.jpg'
         else:
             img_path = img_path + '.' + ext
