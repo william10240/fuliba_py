@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 
 import logging as logger
 
-logger.basicConfig(format='%(asctime)s\t%(pathname)s\t%(message)s', level=logger.INFO)
+logger.basicConfig(format='%(asctime)s\t%(pathname)s\t%(message)s', level=logger.DEBUG)
 
 ptCode = re.compile(r'(.*?)福利汇总第(.*?)期', re.I | re.S | re.M)
 APP_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +29,7 @@ def main():
     main()
 
 def get_list(page_index):
-    url = 'https://fuliba2020.net/category/flhz'
+    url = 'https://fuliba2020.net/tag/flhz'
     if (page_index != "1"):
         url = url + "/page/" + page_index
     logger.debug("列表页请求开始:" + url)
@@ -45,32 +45,47 @@ def get_list(page_index):
     for el in doc('h2 a').items():
         # 准备 参数
         content_title = el.attr('title')
-        content_url = el.attr('href') + "/2"
+        page_url = el.attr('href')
 
         # 测试查看参数
         logger.debug("content_title:" + content_title)
-        logger.debug("content_url:" + content_url)
+        logger.debug("page_url:" + page_url)
 
+        # 开始调用 get_page
+        get_page(page_url, content_title)
+
+def get_page(page_url,page_title):
+    try:
+        doc = pq(url=page_url)
+    except Exception:
+        logger.info("----内容页请求失败:" + page_url)
+        return
+    
+    logger.info("----内容页请求成功:" + page_url)
+
+    for el in doc('.article-paging a').items():
+        # 准备 参数
+        content_url = el.attr('href')
         # 开始调用 get_content
-        get_content(content_url, content_title)
+        get_content(content_url, page_title,el.text())
 
 
-def get_content(content_url, content_title):
-    logger.debug("----内容页请求开始:" + content_title)
+def get_content(content_url, content_title,content_index):
+    logger.debug("--------详情页请求开始:"+content_index+":" + content_title)
 
     try:
         doc = pq(url=content_url)
     except Exception:
-        logger.info("----内容页请求失败:" + content_title)
+        logger.info("--------详情页请求失败:"+content_index+":" + content_title)
         return
 
-    logger.info("----内容页请求成功:" + content_title)
+    logger.info("--------详情页请求成功:"+content_index+":" + content_title)
 
     teg = ptCode.findall(content_title)
     for el in doc(".article-content img"):
         # 准备 参数
         img_src = el.attrib["src"]
-        img_path = os.path.join(IMG_PATH,teg[0][0], teg[0][1], os.path.basename(img_src))
+        img_path = os.path.join(IMG_PATH,teg[0][0], teg[0][1],content_index, os.path.basename(img_src))
 
         # 测试查看参数
         logger.debug("img_src:" + img_src)
@@ -112,7 +127,7 @@ def save_img(img_src, img_path):
     if os.path.splitext(img_src)[1] == '':
         ext = imghdr.what(None, res)
         if ext == None:
-            logger.error('--------图片数据解析请求失败:' + img_src + "\t" + img_path)
+            logger.error('--------图片解析失败:' + img_src + "\t" + img_path)
             return
         elif ext == 'jpeg':
             img_path = img_path + '.jpg'
@@ -122,9 +137,9 @@ def save_img(img_src, img_path):
     try:
         with open(img_path, 'wb') as op:
             op.write(res)
-            logger.debug('--------图片文件保存成功:' + img_src)
+            logger.debug('--------图片保存成功:' + img_src)
     except Exception:
-        logger.error('--------图片文件保存失败:' + img_src + "\t" + img_path)
+        logger.error('--------图片保存失败:' + img_src + "\t" + img_path)
 
 
 # response = requests.get(url='https://fulibus.net/2019001.html/2', timeout=999)
