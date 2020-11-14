@@ -82,9 +82,9 @@ def get_content(content_url, content_title,content_index):
     logger.info("--------详情页请求成功:"+content_index+":" + content_title)
 
     teg = ptCode.findall(content_title)
-    for el in doc(".article-content img"):
+    for el in doc(".article-content img").items():
         # 准备 参数
-        img_src = el.attrib["src"]
+        img_src = el.attr["src"]
         img_path = os.path.join(IMG_PATH,teg[0][0], teg[0][1],content_index, os.path.basename(img_src))
 
         # 测试查看参数
