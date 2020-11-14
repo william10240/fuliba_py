@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 
 import logging as logger
 
-logger.basicConfig(format='%(asctime)s\t%(pathname)s\t%(message)s', level=logger.DEBUG)
+logger.basicConfig(format='%(asctime)s\t%(pathname)s\t%(message)s', level=logger.INFO)
 
 ptCode = re.compile(r'(.*?)福利汇总第(.*?)期', re.I | re.S | re.M)
 APP_PATH = os.path.dirname(os.path.abspath(__file__))
