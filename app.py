@@ -125,13 +125,15 @@ def save_img(img_src, img_path):
         request = opener.open(img_src, timeout=3)
         res = request.read()
     except Exception:
-        logger.error('--------图片请求失败:' + img_src + "\t" + img_path)
+        logger.error("--------图片请求失败:" + img_src)
+        logger.error("--------      地址:" + img_path)
         return
 
     if os.path.splitext(img_src)[1] == '':
         ext = imghdr.what(None, res)
         if ext == None:
-            logger.error('--------图片解析失败:' + img_src + "\t" + img_path)
+            logger.error("--------图片解析失败:" + img_src)
+            logger.error("--------      地址:" + img_path)
             return
         elif ext == 'jpeg':
             img_path = img_path + '.jpg'
@@ -143,7 +145,8 @@ def save_img(img_src, img_path):
             op.write(res)
             logger.debug('--------图片保存成功:' + img_src)
     except Exception:
-        logger.error('--------图片保存失败:' + img_src + "\t" + img_path)
+        logger.error("--------图片保存失败:" + img_src)
+        logger.error("--------      地址:" + img_path)
 
 
 # response = requests.get(url='https://fulibus.net/2019001.html/2', timeout=999)
