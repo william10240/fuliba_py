@@ -22,16 +22,15 @@ logger.info("----------图片存储路径: "+IMG_PATH+" ----------")
 
 def main():
     for i in range(1, 8):
-        get_list(str(i))
-        # print(i)
+        get_list(i)
     logger.info("请求完成,一小时后重试")
     time.sleep(3600)
     main()
 
 def get_list(page_index):
     url = 'https://fuliba2020.net/tag/flhz'
-    if (page_index != "1"):
-        url = url + "/page/" + page_index
+    if (page_index != 1):
+        url = url + "/page/" + str(page_index)
     logger.debug("列表页请求开始:" + url)
 
     try:
