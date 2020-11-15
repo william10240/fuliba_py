@@ -71,8 +71,6 @@ def get_page(page_url,page_title):
 
 
 def get_content(content_url, content_title,content_index):
-    logger.debug("--------详情页请求开始:"+content_index+":" + content_title)
-
     try:
         doc = pq(url=content_url)
     except Exception:
@@ -85,6 +83,10 @@ def get_content(content_url, content_title,content_index):
     for el in doc(".article-content img").items():
         # 准备 参数
         img_src = el.attr["src"]
+        if img_src is None:
+            logger.error("src为空:" + content_index + ":" + content_title)
+            continue
+
         img_path = os.path.join(IMG_PATH,teg[0][0], teg[0][1],content_index, os.path.basename(img_src))
 
         # 测试查看参数
@@ -99,11 +101,13 @@ def save_img(img_src, img_path):
     logger.debug("--------开始下载图片:" + img_src)
 
     if (os.path.exists(img_path)):
-        logger.debug("--------图片已下载过:" + img_src + "\t" + img_path)
+        logger.debug("--------图片已下载过:" + img_src)
+        logger.debug("--------图片保存位置:" + img_path)
         return
 
     if len(glob.glob(img_path + "*")) > 0:  # 如果图片是没有后缀名的
-        logger.debug("--------图片已下载过:" + img_src + "\t" + img_path)
+        logger.debug("--------图片已下载过:" + img_src)
+        logger.debug("--------图片保存位置:" + img_path)
         return
 
     try:
