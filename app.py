@@ -21,7 +21,7 @@ logger.info("----------当前运行路径: "+APP_PATH+" ----------")
 logger.info("----------图片存储路径: "+IMG_PATH+" ----------")
 
 def main():
-    for i in range(1, 7):
+    for i in range(1, 8):
         get_list(str(i))
         # print(i)
     logger.info("请求完成,一小时后重试")
