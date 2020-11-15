@@ -28,7 +28,7 @@ def main():
     main()
 
 def get_list(page_index):
-    url = 'https://fuliba2020.net/tag/flhz'
+    url = 'https://fuliba2020.net/category/flhz'
     if (page_index != 1):
         url = url + "/page/" + str(page_index)
     logger.debug("列表页请求开始:" + url)
