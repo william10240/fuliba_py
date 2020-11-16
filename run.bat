@@ -1,0 +1,1 @@
+cls && python app.py
