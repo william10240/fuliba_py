@@ -33,12 +33,12 @@ def main():
 
 
 def get_list(list_url):
-    logger.info("列表页请求开始:" + list_url)
 
     try:
         doc = pq(url=list_url)
+        logger.info("列表页请求成功:" + list_url)
     except Exception:
-        logger.info("列表页请求失败:" + list_url)
+        logger.error("列表页请求失败:" + list_url)
         return
 
     for el in doc('h2 a').items():
@@ -55,12 +55,12 @@ def get_list(list_url):
 
 
 def get_page(page_url, page_title):
-    logger.info("--内容页请求成功:" + page_url)
 
     try:
         doc = pq(url=page_url)
+        logger.info("--内容页请求成功:" + page_url)
     except Exception:
-        logger.info("--内容页请求失败:" + page_url)
+        logger.error("--内容页请求失败:" + page_url)
         return
 
     for el in doc('.article-paging a').items():
@@ -71,12 +71,12 @@ def get_page(page_url, page_title):
 
 
 def get_content(content_url, content_title, content_index):
-    logger.info("----详情页请求成功:"+content_index+":" + content_title)
 
     try:
         doc = pq(url=content_url)
+        logger.info("----详情页请求成功:"+content_index+":" + content_title)
     except Exception:
-        logger.info("--------详情页请求失败:"+content_index+":" + content_title)
+        logger.error("--------详情页请求失败:"+content_index+":" + content_title)
         return
 
     teg = ptCode.findall(content_title)
@@ -117,7 +117,7 @@ def save_img(img_src, img_path):
         if not os.path.exists(img_folder):
             os.makedirs(img_folder)
     except Exception:
-        logger.error('--------文件夹创建失败:' + img_src + "\t" + img_path)
+        logger.error('--------文件夹创建失败:' + img_path)
         return
 
     try:
