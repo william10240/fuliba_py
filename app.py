@@ -145,7 +145,8 @@ def save_img(img_src, img_path):
     try:
         with open(img_path, 'wb') as op:
             op.write(res)
-            logger.debug('--------图片保存成功:' + img_src)
+            logger.info("--------图片保存成功:" + img_src)
+            logger.info("              地址:" + img_path)
     except Exception:
         logger.error("--------图片保存失败:" + img_src)
         logger.error("              地址:" + img_path)
