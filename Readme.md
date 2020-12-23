@@ -1,5 +1,7 @@
 # 福利吧(https://fuliba2020.net) 福利汇总图片下载器
 
+[Golang 版本](https://github.com/williamyan1024/fuliimg_go),  [NodeJs 版本](https://github.com/williamyan1024/fuliimg_js)
+
 ## 说明
 - ~~保存2019年来福利汇总第二页的图片~~
 - 福吧只显示最新7页的内容,所以只能保存最新的
