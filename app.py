@@ -16,7 +16,7 @@ logger.basicConfig(
 
 ptCode = re.compile(r'(.*?)福利汇总第(.*?)期', re.I | re.S | re.M)
 APP_PATH = os.path.dirname(os.path.abspath(__file__))
-IMG_PATH = os.path.join(os.path.dirname(APP_PATH), "fuliimages")
+IMG_PATH = os.path.join(os.path.dirname(APP_PATH), "fuliimages1")
 BASE_Url = 'https://fuliba2020.net/category/flhz'
 
 logger.info("----------当前运行路径: "+APP_PATH+" ----------")
